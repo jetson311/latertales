@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
         * {
             margin: 0;
@@ -113,7 +116,7 @@
         .hero .subtitle {
             font-size: clamp(20px, 3vw, 28px);
             color: var(--gray-700);
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto 32px;
             line-height: 1.4;
             font-weight: 500;
@@ -162,7 +165,7 @@
 
         /* Section Styles */
         .section {
-            padding: 100px 40px;
+            padding: 100px 40px 200px 40px;
             position: relative;
         }
 
@@ -235,13 +238,19 @@
 
         .feature-image-wrapper {
             position: relative;
+            max-width: 500px;
+        }
+
+        .no-padding-wrapper {
+            padding: 0;
+            margin: 0;
         }
 
         .feature-glow-bg {
             position: absolute;
             inset: -16px;
-            filter: blur(40px);
-            opacity: 0.5;
+            filter: blur(70px);
+            opacity: 0.4;
             border-radius: 20px;
         }
 
@@ -250,7 +259,7 @@
         }
 
         .glow-purple-bg {
-            background: linear-gradient(to top left, rgba(255, 107, 53, 0.2), rgba(139, 92, 246, 0.2));
+            background: linear-gradient(to top left, rgba(255, 107, 53, 0.3), rgba(139, 92, 246, 0.0));
         }
 
         .feature-stat-grid {
@@ -258,6 +267,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             margin-top: 32px;
+            margin-bottom: 60px;
         }
 
         .feature-stat-box {
@@ -293,21 +303,11 @@
         .section-concept {
             background: var(--gray-900);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .section-concept::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('artwork/library-bw.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.02;
-            filter: blur(1px);
+            display: none;
         }
 
         .container {
@@ -398,11 +398,18 @@
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 900px;
             margin: 0 auto;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container.desktop {
+            max-width: 1300px;
+        }
+
+        .video-container.mobile {
+            max-width: 400px;
         }
 
         .video-container video {
@@ -456,7 +463,7 @@
             display: flex;
             gap: 24px;
             overflow-x: auto;
-            padding: 64px 24px 100px;
+            padding: 64px 58px 100px;
             margin-top: 56px;
             margin-left: -40px;
             margin-right: -40px;
@@ -580,11 +587,28 @@
 
         .feature-split-order-2 {
             order: 2;
+            margin-right: 25px;
+        }
+
+        @media (max-width: 1030px) {
+            /* Feature 02: Stack image below text on smaller screens */
+            .section-gray .feature-split {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .section-gray .feature-split > div:last-child {
+                order: 2;
+            }
+            
+            .section-gray .feature-split > div:first-child {
+                order: 1;
+            }
         }
 
         @media (max-width: 768px) {
             .section {
-                padding: 80px 24px;
+                padding: 60px 24px 80px 24px;
             }
 
             .problem-grid {
@@ -607,7 +631,7 @@
             }
             
             .onboarding-gallery {
-                padding: 64px 24px;
+                padding: 64px 50px 93px;
                 margin-left: -24px;
                 margin-right: -24px;
             }
@@ -631,13 +655,19 @@
             }
 
             .feature-split > div {
-                order: 2 !important;
+                order: 2;
             }
 
-            .feature-split > div:first-child {
+            .feature-split-order-1 {
                 order: 1 !important;
             }
+            
+            .feature-split-order-2 {
+                order: 2 !important;
+            }
+        }
 
+        @media (max-width: 600px) {
             .feature-stat-grid {
                 grid-template-columns: 1fr;
             }
@@ -674,6 +704,856 @@
 
         .icon-gradient-reverse {
             background: linear-gradient(to bottom right, #8B5CF6, #FF6B35);
+        }
+
+        /* Animated Icons */
+        .icon-animated {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        /* Shuffle Icon Animation */
+        .shuffle-icon {
+            overflow: hidden;
+        }
+
+        .shuffle-card {
+            position: absolute;
+            width: 32px;
+            height: 40px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #FF6B35, #FF8A5C);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            top: 50%;
+            left: 50%;
+            margin-top: -20px; /* half of height */
+            margin-left: -16px; /* half of width */
+        }
+
+        .shuffle-card.card-1 {
+            animation: shuffle1 8s ease-in-out infinite;
+        }
+
+        .shuffle-card.card-2 {
+            animation: shuffle2 8s ease-in-out infinite;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+        }
+
+        .shuffle-card.card-3 {
+            animation: shuffle3 8s ease-in-out infinite;
+            background: linear-gradient(135deg, #FF6B35, #8B5CF6);
+        }
+
+        @keyframes shuffle1 {
+            0%, 100% { transform: translate(-10px, -8px) rotate(-5deg); z-index: 3; }
+            33% { transform: translate(10px, 8px) rotate(5deg); z-index: 1; }
+            66% { transform: translate(0px, 0px) rotate(0deg); z-index: 2; }
+        }
+
+        @keyframes shuffle2 {
+            0%, 100% { transform: translate(10px, -8px) rotate(5deg); z-index: 1; }
+            33% { transform: translate(0px, 0px) rotate(0deg); z-index: 2; }
+            66% { transform: translate(-10px, 8px) rotate(-5deg); z-index: 3; }
+        }
+
+        @keyframes shuffle3 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg); z-index: 2; }
+            33% { transform: translate(-10px, -8px) rotate(-5deg); z-index: 3; }
+            66% { transform: translate(10px, 8px) rotate(5deg); z-index: 1; }
+        }
+
+        /* Brain/Cognitive Itch Animation */
+        .brain-icon {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .brain-icon svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            stroke: rgba(255, 255, 255, 0.4);
+            stroke-width: 1;
+            fill: none;
+            z-index: 1;
+        }
+
+        .brain-element {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .brain-element.element-orange {
+            background: linear-gradient(135deg, #FF6B35, #FF8A5C);
+            box-shadow: 0 0 12px rgba(255, 107, 53, 0.8);
+            animation: brainMerge1 9s ease-in-out infinite;
+        }
+
+        .brain-element.element-purple {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
+            animation: brainMerge2 9s ease-in-out infinite;
+        }
+
+        .brain-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: brainGlowEffect 9s ease-in-out infinite;
+        }
+
+        /* Orange element enters from top-left corner */
+        @keyframes brainMerge1 {
+            0%, 10% {
+                left: -20px;
+                top: -20px;
+                opacity: 0;
+                transform: translate(0, 0);
+            }
+            15% {
+                opacity: 1;
+            }
+            50% {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+            100% {
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        /* Purple element enters from bottom-right corner */
+        @keyframes brainMerge2 {
+            0%, 10% {
+                right: -20px;
+                bottom: -20px;
+                opacity: 0;
+                transform: translate(0, 0);
+            }
+            15% {
+                opacity: 1;
+            }
+            50% {
+                right: calc(50% - 5px);
+                bottom: calc(50% - 5px);
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                right: calc(50% - 5px);
+                bottom: calc(50% - 5px);
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes brainGlowEffect {
+            0%, 45% {
+                opacity: 0;
+            }
+            55% {
+                opacity: 0.3;
+                box-shadow: 
+                    0 0 20px rgba(255, 107, 53, 0.4),
+                    0 0 30px rgba(139, 92, 246, 0.4);
+            }
+            65% {
+                opacity: 0.4;
+                box-shadow: 
+                    0 0 25px rgba(255, 107, 53, 0.5),
+                    0 0 35px rgba(139, 92, 246, 0.5);
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .brain-icon svg {
+            animation: brainStrokeGlow 9s ease-in-out infinite;
+        }
+
+        @keyframes brainStrokeGlow {
+            0%, 45% {
+                stroke: rgba(255, 255, 255, 0.4);
+                filter: drop-shadow(0 0 0px transparent);
+            }
+            55% {
+                stroke: rgba(255, 107, 53, 0.8);
+                filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.6));
+            }
+            65% {
+                stroke: rgba(139, 92, 246, 0.8);
+                filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+            }
+            100% {
+                stroke: rgba(255, 255, 255, 0.4);
+                filter: drop-shadow(0 0 0px transparent);
+            }
+        }
+
+        /* Constraint/Compression Animation */
+        .constraint-icon {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .constraint-center {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            background: linear-gradient(135deg, #8B5CF6, #FF6B35);
+            border-radius: 4px;
+            transform: rotate(45deg);
+            opacity: 0.6;
+            animation: centerPulse 8s ease-in-out infinite, centerGlowPulse 8s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+        }
+
+        .constraint-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B35, #FF8A5C);
+            box-shadow: 0 0 6px rgba(255, 107, 53, 0.6);
+        }
+
+        .constraint-particle.particle-1 { animation: compress1 8s ease-in-out infinite; }
+        .constraint-particle.particle-2 { animation: compress2 8s ease-in-out infinite; }
+        .constraint-particle.particle-3 { animation: compress3 8s ease-in-out infinite; }
+        .constraint-particle.particle-4 { animation: compress4 8s ease-in-out infinite; }
+        .constraint-particle.particle-5 { 
+            animation: compress5 8s ease-in-out infinite;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            box-shadow: 0 0 6px rgba(139, 92, 246, 0.6);
+        }
+        .constraint-particle.particle-6 { 
+            animation: compress6 8s ease-in-out infinite;
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            box-shadow: 0 0 6px rgba(139, 92, 246, 0.6);
+        }
+
+        @keyframes centerPulse {
+            0%, 50% {
+                opacity: 0.6;
+                transform: rotate(45deg) scale(1);
+            }
+            70%, 100% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1.5);
+            }
+        }
+
+        /* Glow pulse effect that starts after growth */
+        @keyframes centerGlowPulse {
+            0%, 70% {
+                box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+            }
+            80% {
+                box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), 0 0 40px rgba(139, 92, 246, 0.4);
+            }
+            90% {
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 0 35px rgba(139, 92, 246, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 25px rgba(139, 92, 246, 0.7), 0 0 40px rgba(139, 92, 246, 0.4);
+            }
+        }
+
+        /* Particles compress inward and stay inside */
+        @keyframes compress1 {
+            0% { left: 10px; top: 10px; opacity: 1; }
+            45% { left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 1; }
+            50%, 100% { left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        @keyframes compress2 {
+            0% { right: 10px; top: 15px; opacity: 1; }
+            45% { right: 50%; top: 50%; transform: translate(50%, -50%); opacity: 1; }
+            50%, 100% { right: 50%; top: 50%; transform: translate(50%, -50%) scale(0); opacity: 0; }
+        }
+
+        @keyframes compress3 {
+            0% { left: 15px; bottom: 10px; opacity: 1; }
+            45% { left: 50%; bottom: 50%; transform: translate(-50%, 50%); opacity: 1; }
+            50%, 100% { left: 50%; bottom: 50%; transform: translate(-50%, 50%) scale(0); opacity: 0; }
+        }
+
+        @keyframes compress4 {
+            0% { right: 15px; bottom: 15px; opacity: 1; }
+            45% { right: 50%; bottom: 50%; transform: translate(50%, 50%); opacity: 1; }
+            50%, 100% { right: 50%; bottom: 50%; transform: translate(50%, 50%) scale(0); opacity: 0; }
+        }
+
+        @keyframes compress5 {
+            0% { left: 50%; top: 8px; transform: translateX(-50%); opacity: 1; }
+            45% { left: 50%; top: 50%; transform: translate(-50%, -50%); opacity: 1; }
+            50%, 100% { left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        @keyframes compress6 {
+            0% { left: 50%; bottom: 8px; transform: translateX(-50%); opacity: 1; }
+            45% { left: 50%; bottom: 50%; transform: translate(-50%, 50%); opacity: 1; }
+            50%, 100% { left: 50%; bottom: 12px; transform: translateX(-50%) scale(0); opacity: 0; }
+        }
+
+        /* Star particles that appear then disappear */
+        .constraint-star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 215, 0, 0.8);
+        }
+
+        .constraint-star.star-1 { animation: starAppear1 8s ease-in-out infinite; }
+        .constraint-star.star-2 { animation: starAppear2 8s ease-in-out infinite; }
+        .constraint-star.star-3 { animation: starAppear3 8s ease-in-out infinite; }
+        .constraint-star.star-4 { animation: starAppear4 8s ease-in-out infinite; }
+
+        @keyframes starAppear1 {
+            0%, 68% { top: 50%; left: 35%; opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            72%, 78% { top: 40%; left: 35%; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            82%, 100% { top: 40%; left: 35%; opacity: 0; transform: translate(-50%, -50%) scale(0); }
+        }
+
+        @keyframes starAppear2 {
+            0%, 68% { top: 50%; right: 35%; opacity: 0; transform: translate(50%, -50%) scale(0); }
+            72%, 78% { top: 40%; right: 35%; opacity: 1; transform: translate(50%, -50%) scale(1); }
+            82%, 100% { top: 40%; right: 35%; opacity: 0; transform: translate(50%, -50%) scale(0); }
+        }
+
+        @keyframes starAppear3 {
+            0%, 68% { bottom: 50%; left: 35%; opacity: 0; transform: translate(-50%, 50%) scale(0); }
+            72%, 78% { bottom: 40%; left: 35%; opacity: 1; transform: translate(-50%, 50%) scale(1); }
+            82%, 100% { bottom: 40%; left: 35%; opacity: 0; transform: translate(-50%, 50%) scale(0); }
+        }
+
+        @keyframes starAppear4 {
+            0%, 68% { bottom: 50%; right: 35%; opacity: 0; transform: translate(50%, 50%) scale(0); }
+            72%, 78% { bottom: 40%; right: 35%; opacity: 1; transform: translate(50%, 50%) scale(1); }
+            82%, 100% { bottom: 40%; right: 35%; opacity: 0; transform: translate(50%, 50%) scale(0); }
+        }
+
+        /* Cluster Icon Animation */
+        .cluster-icon {
+            overflow: hidden;
+        }
+
+        .cluster-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            margin-top: -4px;
+            margin-left: -4px;
+            opacity: 1;
+        }
+
+        /* Purple dots */
+        .cluster-dot.dot-purple-1,
+        .cluster-dot.dot-purple-2,
+        .cluster-dot.dot-purple-3,
+        .cluster-dot.dot-purple-4 {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+        }
+
+        .cluster-dot.dot-purple-1 {
+            animation: mergePurple1 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-purple-2 {
+            animation: mergePurple2 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-purple-3 {
+            animation: mergePurple3 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-purple-4 {
+            animation: mergePurple4 10s ease-in-out infinite;
+        }
+
+        /* Orange dots */
+        .cluster-dot.dot-orange-1,
+        .cluster-dot.dot-orange-2,
+        .cluster-dot.dot-orange-3,
+        .cluster-dot.dot-orange-4 {
+            background: linear-gradient(135deg, #FF6B35, #FF8A5C);
+            box-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+        }
+
+        .cluster-dot.dot-orange-1 {
+            animation: mergeOrange1 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-orange-2 {
+            animation: mergeOrange2 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-orange-3 {
+            animation: mergeOrange3 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-orange-4 {
+            animation: mergeOrange4 10s ease-in-out infinite;
+        }
+
+        /* Pink dots */
+        .cluster-dot.dot-pink-1,
+        .cluster-dot.dot-pink-2,
+        .cluster-dot.dot-pink-3,
+        .cluster-dot.dot-pink-4 {
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+            box-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
+        }
+
+        .cluster-dot.dot-pink-1 {
+            animation: mergePink1 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-pink-2 {
+            animation: mergePink2 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-pink-3 {
+            animation: mergePink3 10s ease-in-out infinite;
+        }
+
+        .cluster-dot.dot-pink-4 {
+            animation: mergePink4 10s ease-in-out infinite;
+        }
+
+        /* Colored squares */
+        .cluster-square {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            top: 50%;
+            left: 50%;
+            margin-top: -8px;
+            margin-left: -8px;
+            opacity: 0;
+        }
+
+        .cluster-square.square-purple {
+            background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+            animation: glowSquarePurple 10s ease-in-out infinite;
+        }
+
+        .cluster-square.square-orange {
+            background: linear-gradient(135deg, #FF6B35, #FF8A5C);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.8);
+            animation: glowSquareOrange 10s ease-in-out infinite;
+        }
+
+        .cluster-square.square-pink {
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
+            animation: glowSquarePink 10s ease-in-out infinite;
+        }
+
+        /* Purple dot merge animations */
+        @keyframes mergePurple1 {
+            0%, 3% { transform: translate(-38px, -8px); opacity: 0; }
+            5% { transform: translate(-38px, -8px); opacity: 1; }
+            35% { transform: translate(-12px, -10px); opacity: 1; }
+            36% { transform: translate(-12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(-38px, -8px); opacity: 0; }
+        }
+
+        @keyframes mergePurple2 {
+            0%, 3% { transform: translate(5px, -32px); opacity: 0; }
+            5% { transform: translate(5px, -32px); opacity: 1; }
+            35% { transform: translate(-12px, -10px); opacity: 1; }
+            36% { transform: translate(-12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(5px, -32px); opacity: 0; }
+        }
+
+        @keyframes mergePurple3 {
+            0%, 3% { transform: translate(-20px, 18px); opacity: 0; }
+            5% { transform: translate(-20px, 18px); opacity: 1; }
+            35% { transform: translate(-12px, -10px); opacity: 1; }
+            36% { transform: translate(-12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(-20px, 18px); opacity: 0; }
+        }
+
+        @keyframes mergePurple4 {
+            0%, 3% { transform: translate(32px, 5px); opacity: 0; }
+            5% { transform: translate(32px, 5px); opacity: 1; }
+            35% { transform: translate(-12px, -10px); opacity: 1; }
+            36% { transform: translate(-12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(32px, 5px); opacity: 0; }
+        }
+
+        /* Orange dot merge animations */
+        @keyframes mergeOrange1 {
+            0%, 3% { transform: translate(38px, -18px); opacity: 0; }
+            5% { transform: translate(38px, -18px); opacity: 1; }
+            35% { transform: translate(12px, -10px); opacity: 1; }
+            36% { transform: translate(12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(38px, -18px); opacity: 0; }
+        }
+
+        @keyframes mergeOrange2 {
+            0%, 3% { transform: translate(-8px, -38px); opacity: 0; }
+            5% { transform: translate(-8px, -38px); opacity: 1; }
+            35% { transform: translate(12px, -10px); opacity: 1; }
+            36% { transform: translate(12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(-8px, -38px); opacity: 0; }
+        }
+
+        @keyframes mergeOrange3 {
+            0%, 3% { transform: translate(-35px, 8px); opacity: 0; }
+            5% { transform: translate(-35px, 8px); opacity: 1; }
+            35% { transform: translate(12px, -10px); opacity: 1; }
+            36% { transform: translate(12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(-35px, 8px); opacity: 0; }
+        }
+
+        @keyframes mergeOrange4 {
+            0%, 3% { transform: translate(20px, 25px); opacity: 0; }
+            5% { transform: translate(20px, 25px); opacity: 1; }
+            35% { transform: translate(12px, -10px); opacity: 1; }
+            36% { transform: translate(12px, -10px); opacity: 0; }
+            90%, 100% { transform: translate(20px, 25px); opacity: 0; }
+        }
+
+        /* Pink dot merge animations */
+        @keyframes mergePink1 {
+            0%, 3% { transform: translate(-25px, -20px); opacity: 0; }
+            5% { transform: translate(-25px, -20px); opacity: 1; }
+            35% { transform: translate(0px, 14px); opacity: 1; }
+            36% { transform: translate(0px, 14px); opacity: 0; }
+            90%, 100% { transform: translate(-25px, -20px); opacity: 0; }
+        }
+
+        @keyframes mergePink2 {
+            0%, 3% { transform: translate(15px, -28px); opacity: 0; }
+            5% { transform: translate(15px, -28px); opacity: 1; }
+            35% { transform: translate(0px, 14px); opacity: 1; }
+            36% { transform: translate(0px, 14px); opacity: 0; }
+            90%, 100% { transform: translate(15px, -28px); opacity: 0; }
+        }
+
+        @keyframes mergePink3 {
+            0%, 3% { transform: translate(35px, 15px); opacity: 0; }
+            5% { transform: translate(35px, 15px); opacity: 1; }
+            35% { transform: translate(0px, 14px); opacity: 1; }
+            36% { transform: translate(0px, 14px); opacity: 0; }
+            90%, 100% { transform: translate(35px, 15px); opacity: 0; }
+        }
+
+        @keyframes mergePink4 {
+            0%, 3% { transform: translate(-12px, 35px); opacity: 0; }
+            5% { transform: translate(-12px, 35px); opacity: 1; }
+            35% { transform: translate(0px, 14px); opacity: 1; }
+            36% { transform: translate(0px, 14px); opacity: 0; }
+            90%, 100% { transform: translate(-12px, 35px); opacity: 0; }
+        }
+
+        /* Square glow animations - crossfade with dots */
+        @keyframes glowSquarePurple {
+            0%, 35% { 
+                transform: translate(-12px, -10px) scale(0);
+                opacity: 0;
+            }
+            36% { 
+                transform: translate(-12px, -10px) scale(1);
+                opacity: 1;
+            }
+            85% { 
+                transform: translate(-12px, -10px) scale(1);
+                opacity: 1;
+            }
+            86% { 
+                transform: translate(-12px, -10px) scale(0);
+                opacity: 0;
+            }
+            100% { 
+                transform: translate(-12px, -10px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowSquareOrange {
+            0%, 35% { 
+                transform: translate(12px, -10px) scale(0);
+                opacity: 0;
+            }
+            36% { 
+                transform: translate(12px, -10px) scale(1);
+                opacity: 1;
+            }
+            85% { 
+                transform: translate(12px, -10px) scale(1);
+                opacity: 1;
+            }
+            86% { 
+                transform: translate(12px, -10px) scale(0);
+                opacity: 0;
+            }
+            100% { 
+                transform: translate(12px, -10px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowSquarePink {
+            0%, 35% { 
+                transform: translate(0px, 14px) scale(0);
+                opacity: 0;
+            }
+            36% { 
+                transform: translate(0px, 14px) scale(1);
+                opacity: 1;
+            }
+            85% { 
+                transform: translate(0px, 14px) scale(1);
+                opacity: 1;
+            }
+            86% { 
+                transform: translate(0px, 14px) scale(0);
+                opacity: 0;
+            }
+            100% { 
+                transform: translate(0px, 14px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Ritual Icon Animation - Chaos to Calm Narrative */
+        .ritual-icon {
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* CHAOS PHASE - scattered rectangles appearing randomly */
+        .chaos-container {
+            position: absolute;
+            inset: 0;
+            opacity: 1;
+            animation: chaosPhase 16s ease-in-out infinite;
+        }
+
+        @keyframes chaosPhase {
+            0%, 30% { opacity: 1; }
+            35%, 100% { opacity: 0; pointer-events: none; }
+        }
+
+        .chaos-rect {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.6), rgba(255, 138, 92, 0.4));
+            border-radius: 2px;
+            box-shadow: 0 0 4px rgba(255, 107, 53, 0.4);
+        }
+
+        /* 12 scattered rectangles with random sizes and positions */
+        .chaos-rect:nth-child(1) { width: 14px; height: 6px; animation: chaosFlash1 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(2) { width: 12px; height: 8px; animation: chaosFlash2 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(3) { width: 16px; height: 5px; animation: chaosFlash3 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(4) { width: 11px; height: 7px; animation: chaosFlash4 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(5) { width: 15px; height: 6px; animation: chaosFlash5 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(6) { width: 13px; height: 8px; animation: chaosFlash6 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(7) { width: 14px; height: 5px; animation: chaosFlash7 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(8) { width: 12px; height: 7px; animation: chaosFlash8 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(9) { width: 15px; height: 6px; animation: chaosFlash9 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(10) { width: 13px; height: 8px; animation: chaosFlash10 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(11) { width: 14px; height: 5px; animation: chaosFlash11 16s ease-in-out infinite; }
+        .chaos-rect:nth-child(12) { width: 16px; height: 7px; animation: chaosFlash12 16s ease-in-out infinite; }
+
+        @keyframes chaosFlash1 {
+            0%, 2% { left: 10%; top: 15%; opacity: 0; transform: scale(0.8); }
+            3%, 8% { opacity: 1; transform: scale(1); }
+            9%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash2 {
+            0%, 4% { left: 65%; top: 45%; opacity: 0; transform: scale(0.8); }
+            5%, 10% { opacity: 1; transform: scale(1); }
+            11%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash3 {
+            0%, 6% { left: 35%; top: 70%; opacity: 0; transform: scale(0.8); }
+            7%, 12% { opacity: 1; transform: scale(1); }
+            13%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash4 {
+            0%, 8% { left: 78%; top: 25%; opacity: 0; transform: scale(0.8); }
+            9%, 14% { opacity: 1; transform: scale(1); }
+            15%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash5 {
+            0%, 10% { left: 20%; top: 55%; opacity: 0; transform: scale(0.8); }
+            11%, 16% { opacity: 1; transform: scale(1); }
+            17%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash6 {
+            0%, 5% { left: 50%; top: 35%; opacity: 0; transform: scale(0.8); }
+            6%, 11% { opacity: 1; transform: scale(1); }
+            12%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash7 {
+            0%, 12% { left: 72%; top: 62%; opacity: 0; transform: scale(0.8); }
+            13%, 18% { opacity: 1; transform: scale(1); }
+            19%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash8 {
+            0%, 14% { left: 15%; top: 80%; opacity: 0; transform: scale(0.8); }
+            15%, 20% { opacity: 1; transform: scale(1); }
+            21%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash9 {
+            0%, 7% { left: 55%; top: 18%; opacity: 0; transform: scale(0.8); }
+            8%, 13% { opacity: 1; transform: scale(1); }
+            14%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash10 {
+            0%, 16% { left: 38%; top: 50%; opacity: 0; transform: scale(0.8); }
+            17%, 22% { opacity: 1; transform: scale(1); }
+            23%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash11 {
+            0%, 11% { left: 82%; top: 72%; opacity: 0; transform: scale(0.8); }
+            12%, 17% { opacity: 1; transform: scale(1); }
+            18%, 100% { opacity: 0; }
+        }
+        @keyframes chaosFlash12 {
+            0%, 18% { left: 25%; top: 40%; opacity: 0; transform: scale(0.8); }
+            19%, 24% { opacity: 1; transform: scale(1); }
+            25%, 100% { opacity: 0; }
+        }
+
+        /* TRANSITION PHASE - purple wipe */
+        .ritual-transition {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            animation: transitionPhase 16s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes transitionPhase {
+            0%, 32% { opacity: 0; }
+            35%, 40% { opacity: 1; }
+            43%, 100% { opacity: 0; }
+        }
+
+        .transition-wipe {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(139, 92, 246, 0.5), 
+                transparent
+            );
+            animation: wipeAnimation 16s ease-in-out infinite;
+        }
+
+        @keyframes wipeAnimation {
+            0%, 34% { transform: translateX(-120%); }
+            35%, 40% { transform: translateX(120%); }
+            41%, 100% { transform: translateX(120%); }
+        }
+
+        /* RITUAL PHASE - calm structured grid with pulse */
+        .ritual-container {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            animation: ritualPhase 16s ease-in-out infinite;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 8px;
+        }
+
+        @keyframes ritualPhase {
+            0%, 42% { opacity: 0; }
+            45%, 97% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .ritual-box {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pulse on specific boxes (represent ritual days) */
+        .ritual-box:nth-child(2),
+        .ritual-box:nth-child(5) {
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .ritual-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(139, 92, 246, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(139, 92, 246, 0.6);
+            opacity: 0;
+        }
+
+        .ritual-box:nth-child(2) .ritual-dot {
+            animation: ritualDotPulse1 16s ease-in-out infinite;
+        }
+
+        .ritual-box:nth-child(5) .ritual-dot {
+            animation: ritualDotPulse2 16s ease-in-out infinite;
+        }
+
+        @keyframes ritualDotPulse1 {
+            0%, 47% { opacity: 0; transform: scale(0.8); }
+            50%, 55% { opacity: 1; transform: scale(1.2); }
+            58%, 95% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0; }
+        }
+
+        @keyframes ritualDotPulse2 {
+            0%, 52% { opacity: 0; transform: scale(0.8); }
+            55%, 60% { opacity: 1; transform: scale(1.2); }
+            63%, 95% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 0; }
         }
 
         /* Text Colors */
@@ -741,6 +1621,7 @@
 
         .text-3xl {
             font-size: 48px;
+            line-height: 61px;
         }
 
         .line-height-normal {
@@ -1013,6 +1894,7 @@
     align-items: center;
     justify-content: center;
     perspective: 1500px; /* Creates 3D depth */
+    isolation: isolate; /* Creates new stacking context to prevent z-index issues */
 }
 
 .stacked-cards-horizontal .stacked-card-back,
@@ -1085,21 +1967,244 @@
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
+    .feature-image-wrapper {
+        margin: 0 auto 80px auto;
+        max-width: 500px;
+        padding: 0 24px;
+    }
+    
     .stacked-cards-horizontal {
-        height: 400px;
+        height: 480px;
     }
     
     .stacked-cards-horizontal .stacked-card-back,
     .stacked-cards-horizontal .stacked-card-front {
-        width: 90%;
+        width: 85%;
     }
     
     .stacked-cards-horizontal .stacked-card-back {
-        transform: translateX(-5%) rotateY(5deg) scale(0.94);
+        left: 0;
+        transform: translateX(-6%) rotateY(6deg) scale(0.93);
+        opacity: 0.75;
     }
     
     .stacked-cards-horizontal .stacked-card-front {
-        transform: translateX(5%) rotateY(-3deg) scale(1);
+        right: 0;
+        transform: translateX(6%) rotateY(-4deg) scale(1);
+    }
+    
+    /* Animation on scroll */
+    .fade-in.visible .stacked-cards-horizontal .stacked-card-back {
+        animation: slideInBackHorizontal 0.8s ease-out 0.2s forwards;
+    }
+    
+    .fade-in.visible .stacked-cards-horizontal .stacked-card-front {
+        animation: slideInFrontHorizontal 0.8s ease-out 0.5s forwards;
+    }
+    
+    /* Disable hover effects on mobile */
+    .stacked-cards-horizontal:hover .stacked-card-back {
+        transform: translateX(-6%) rotateY(6deg) scale(0.93);
+    }
+    
+    .stacked-cards-horizontal:hover .stacked-card-front {
+        transform: translateX(6%) rotateY(-4deg) scale(1);
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .feature-image-wrapper {
+        margin: 0 auto 80px auto;
+        max-width: 500px;
+        padding: 0 32px;
+    }
+    
+    .stacked-cards-horizontal {
+        height: 500px;
+    }
+    
+    .stacked-cards-horizontal .stacked-card-back,
+    .stacked-cards-horizontal .stacked-card-front {
+        width: 85%;
+    }
+    
+    .stacked-cards-horizontal .stacked-card-back {
+        left: 0;
+        transform: translateX(-7%) rotateY(7deg) scale(0.93);
+    }
+    
+    .stacked-cards-horizontal .stacked-card-front {
+        right: 0;
+        transform: translateX(7%) rotateY(-4deg) scale(1);
+    }
+}
+
+/* Larger desktop - prevent edge touching */
+@media (min-width: 1441px) {
+    .feature-image-wrapper {
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+}
+
+/* Video Card Styles */
+.video-card {
+    object-fit: cover;
+    border-radius: 24px;
+    background: black;
+}
+
+/* Ensure video maintains card styling */
+.stacked-cards-horizontal video.stacked-card-front {
+    display: block;
+}
+
+/* Optional: Add a subtle play indicator on hover */
+.stacked-cards-horizontal:hover video.stacked-card-front {
+    filter: brightness(1.05);
+}
+
+/* Platform Toggle Styles */
+.platform-toggle-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0 48px 0;
+}
+
+.workflow-glow-wrapper {
+    position: relative;
+    padding: 40px 0;
+}
+
+.workflow-glow-bg {
+    position: absolute;
+    inset: -20px;
+    filter: blur(60px);
+    opacity: 0.4;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(255, 107, 53, 0.15));
+    pointer-events: none;
+}
+
+.image-glow-wrapper {
+    position: relative;
+    overflow: visible;
+}
+
+.image-glow-bg {
+    position: absolute;
+    inset: -20px;
+    filter: blur(60px);
+    opacity: 0.4;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(255, 107, 53, 0.25));
+    pointer-events: none;
+    z-index: 0;
+}
+
+.image-glow-bg-right {
+    position: absolute;
+    inset: -40px;
+    filter: blur(80px);
+    opacity: 0.8;
+    border-radius: 30px;
+    background: linear-gradient(to left, rgba(255, 107, 53, 0.8) 0%, rgba(255, 107, 53, 0.4) 50%, rgba(139, 92, 246, 0.0) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.image-glow-wrapper > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+.platform-toggle {
+    display: inline-flex;
+    background: var(--gray-800);
+    border-radius: 12px;
+    padding: 6px;
+    gap: 6px;
+}
+
+.platform-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: var(--gray-300);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.platform-btn svg {
+    transition: all 0.3s ease;
+}
+
+.platform-btn:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.platform-btn.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.platform-btn.active svg {
+    transform: scale(1.1);
+}
+
+/* Platform Video Switching */
+.platform-video {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.platform-video.active {
+    display: block;
+    opacity: 1;
+    animation: fadeInScale 0.5s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.workflow-video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Mobile Responsive Toggle */
+@media (max-width: 768px) {
+    .platform-toggle {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .platform-btn {
+        flex: 1;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 14px;
     }
 }
     </style>
@@ -1114,7 +2219,7 @@
         <div class="hero-content fade-in">
             <img src="./later-tales-logo.png" alt="Later Tales Logo" class="hero-logo">
             <h1>LATER TALES</h1>
-            <p class="subtitle">A gamified platform where communities imagine technology's social futures through micro-storytelling</p>
+            <p class="subtitle">A gamified platform where communities imagine technology's social futures through micro-storytelling.</p>
             
             <div class="hero-meta">
                 <span><strong>Role:</strong> Product Designer (Solo)</span>
@@ -1123,7 +2228,7 @@
             </div>
 
             <div class="tools-used">
-                <span class="tool-tag">Claude AI</span>
+                <span class="tool-tag">Claude</span>
                 <span class="tool-tag">MidJourney</span>
                 <span class="tool-tag">ChatGPT</span>
                 <span class="tool-tag">NotebookLM</span>
@@ -1138,17 +2243,18 @@
             <div class="problem-grid fade-in">
                 <div class="problem-text">
                     <span class="section-label">The Challenge</span>
-                    <h3>Society Lacks Tools for Collective Future-Thinking</h3>
-                    <p>We're consistently caught off guard by technology's social consequences. Traditional forecasting stays locked in corporate strategy rooms, while social media reacts to current events but provides no structured way to imagine "what if" scenarios collaboratively.</p>
+                    <h3>Society Lacks Tools for Collective Future Thinking</h3>
+                    <p>Traditional forecasting stays locked in corporate strategy rooms, while social media reacts to current events but provides no structured way to imagine "what if" scenarios collaboratively.</p>
                     
-                   
+                    <p><b>We need tools that democratize future-thinking</b> and harness collective human imagination before technologies arrive, not after.</p>
 
                     <div class="insight-box">
-                        <p><strong>Design Goal:</strong> Create a low-barrier platform that makes speculative thinking as engaging as Wordle, while generating actionable foresight like prediction markets.</p>
+                        <p><strong>Design Goal:</strong> Create a low barrier platform that makes speculative thinking as engaging as Wordle, while generating actionable foresight like prediction markets.</p>
                     </div>
                 </div>
                 
-                <div>
+                <div class="image-glow-wrapper">
+                    <div class="image-glow-bg-right"></div>
                     <img src="artwork/dreamer.png" alt="Mind to Machine Concept" class="feature-image">
                 </div>
             </div>
@@ -1161,7 +2267,7 @@
             <div class="section-header fade-in">
                 <div class="feature-badge badge-purple">Research & Insights</div>
                 <h2 class="section-title">Building on Behavioral Patterns</h2>
-                <p class="section-subtitle">Cognitive design principles, 15+ competitive analyses, and short form fiction writing informed the product strategy</p>
+                <p class="section-subtitle">Cognitive design principles, 15+ competitive analyses, and trends in short form fiction writing informed the product strategy.</p>
             </div>
 
             <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
@@ -1172,7 +2278,7 @@
                         <span>🧠</span>
                     </div>
                     <h3 class="feature-title">The Cognitive Itch</h3>
-                    <p class="feature-description">Combining familiar elements (café setting) with unfamiliar technology (neural interfaces) creates a 'cognitive itch'—the sweet spot between comfort and curiosity that drives sustained engagement.</p>
+                    <p class="feature-description">Combining familiar elements (café setting) with unfamiliar technology (neural interfaces) creates a 'cognitive itch', the sweet spot between comfort and curiosity that drives sustained engagement.</p>
                 </div>
 
                   <div class="feature-card hover-glow fade-in">
@@ -1180,7 +2286,7 @@
                         <span>💡</span>
                     </div>
                     <h3 class="feature-title">Constraint Drives Creativity</h3>
-                     <p class="feature-description">Creativity research suggests that constraints can enhance innovation by forcing prioritization and focus.<br/><a href="https://hbr.org/2019/11/why-constraints-are-good-for-innovation" target="_blank" style="color: #CCCCCC;">Harvard Business Review: Why Constraints are Good for Innovation</a></p>
+                     <p class="feature-description">Research suggests abundance breeds indecision, and constraints force focus and drive innovation.<br/><br/><a href="https://hbr.org/2019/11/why-constraints-are-good-for-innovation" target="_blank" style="color: #CCCCCC;">Harvard Business Review: Why Constraints are Good for Innovation</a></p>
                 </div>
 
                 <div class="feature-card hover-glow fade-in">
@@ -1202,7 +2308,7 @@
             <div class="section-header fade-in">
                 <div class="feature-badge badge-orange">The Solution</div>
                 <h2 class="section-title">Micro-Stories × Voting × AI Theme Analysis</h2>
-                <p class="section-subtitle">Users encounter a tech-grounded scenario each week, write 150-character endings, and vote on likelihood—transforming individual creativity into collective intelligence.</p>
+                <p class="section-subtitle">Users encounter a tech-grounded scenario each week, write 150 character endings, and vote on likelihood, transforming individual creativity into collective intelligence.</p>
             </div>
         </div>
     </section>
@@ -1216,20 +2322,29 @@
                         <div class="feature-glow-bg glow-orange-bg"></div>
                         <div class="stacked-cards-horizontal">
                             <img src="./mobile-screenshots/card2.png" alt="Tale voting interface - Back" class="feature-image stacked-card-back">
-                            <img src="./mobile-screenshots/card1.png" alt="Tale voting interface - Front" class="feature-image stacked-card-front">
+                            <video 
+                                src="./mobile-screenshots/card.mp4" 
+                                class="feature-image stacked-card-front video-card" 
+                                autoplay 
+                                loop 
+                                muted 
+                                playsinline
+                                poster="./mobile-screenshots/card1.png">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                     </div>
                 </div>
                 
                 <div class="feature-split-order-1">
-                    <div class="feature-badge badge-purple">Feature 01</div>
+                    <div class="feature-badge badge-orange">Feature 01</div>
                     
                     <h2 class="text-white text-3xl mb-24 font-semibold">Weekly Tale System</h2>
                     
                     <div class="text-light text-lg line-height-relaxed">
                         <p class="mb-20">Every tale pairs <span class="text-white font-semibold">one emerging technology</span> (neural interfaces, genetic editing, AR overlays) with <span class="text-white font-semibold">one grounded scenario</span> (café meetup, job interview, first date).</p>
                         
-                        <p>This constraint mirrors Black Mirror's formula: familiar enough to relate to, speculative enough to spark imagination.</p>
+                        <p>Familiar enough to relate to, speculative enough to spark imagination.</p>
                     </div>
                     
                     <div class="feature-stat-grid">
@@ -1257,11 +2372,9 @@
                     <h2 class="text-white text-3xl mb-24 font-semibold">Constrained Story Creation</h2>
                     
                     <div class="text-light text-lg line-height-relaxed">
-                        <p class="mb-20"><span class="text-white font-semibold">150 characters maximum.</span> Just enough for a complete micro-story, forcing writers to distill ideas to their essence.</p>
+                        <p class="mb-20"><b>150 characters maximum</b>, just enough to end a complete micro-story and distill ideas to their essence. The "Generate Idea" function offers a random starting point for writers who are stuck or beginners, for optional guidance that doesn't control.</p>
                         
-                        <p class="mb-20">Users can submit up to 5 endings per tale, encouraging iteration and refinement. An AI-powered <span class="text-white font-semibold">Originality Score</span> provides instant feedback on uniqueness versus crowd patterns.</p>
-                        
-                        <p>The "Generate Idea" prompt offers creative nudges for stuck writers—optional scaffolding that supports without dictating.</p>
+                        <p class="mb-20">An AI-powered <span class="text-white font-semibold">Originality Score</span> provides instant feedback on uniqueness versus crowd patterns.</p>
                     </div>
                     
                     <div class="feature-highlight-box">
@@ -1274,7 +2387,7 @@
                 </div>
                 
                 <div>
-                    <div class="feature-image-wrapper">
+                    <div class="no-padding-wrapper">
                         <div class="feature-glow-bg glow-purple-bg"></div>
                         <img src="./desktop-screenshots/add-later-tale.png" alt="Story creation interface" class="feature-image">
                     </div>
@@ -1287,33 +2400,62 @@
     <section class="section section-dark">
         <div class="container">
             <div class="section-header fade-in" style="margin-bottom: 64px;">
-                <div class="feature-badge badge-purple">Feature 03</div>
-                <h2 class="section-title">Voting & Theme Analysis</h2>
-                <p class="section-subtitle">Binary voting (Likely/Unlikely) keeps decisions fast while randomized story exposure prevents groupthink</p>
+                <div class="feature-badge badge-orange">Feature 03</div>
+                <h2 class="text-white text-3xl mb-24 font-semibold">Voting & Theme Analysis</h2>
+                <p class="text-light text-lg line-height-relaxed" style="max-width: 800px; margin: 0 auto;">Binary voting (Likely/Unlikely) keeps decisions fast while randomized story exposure prevents groupthink.</p>
             </div>
 
             <div class="voting-cards-grid">
                 <div class="feature-card hover-glow fade-in">
-                    <div class="icon-gradient">👍</div>
+                    <div class="icon-animated shuffle-icon">
+                        <div class="shuffle-card card-1"></div>
+                        <div class="shuffle-card card-2"></div>
+                        <div class="shuffle-card card-3"></div>
+                    </div>
                     <h3 class="voting-card-title">Randomized Exposure</h3>
                     <p class="voting-card-description">Stories appear in randomized order for each voter, ensuring diverse narratives get equal visibility regardless of submission time or early vote counts.</p>
                 </div>
                 
                 <div class="feature-card hover-glow fade-in">
-                    <div class="icon-gradient-reverse icon-gradient">🧠</div>
+                    <div class="icon-animated cluster-icon">
+                        <!-- Purple cluster dots -->
+                        <div class="cluster-dot dot-purple-1"></div>
+                        <div class="cluster-dot dot-purple-2"></div>
+                        <div class="cluster-dot dot-purple-3"></div>
+                        <div class="cluster-dot dot-purple-4"></div>
+                        
+                        <!-- Orange cluster dots -->
+                        <div class="cluster-dot dot-orange-1"></div>
+                        <div class="cluster-dot dot-orange-2"></div>
+                        <div class="cluster-dot dot-orange-3"></div>
+                        <div class="cluster-dot dot-orange-4"></div>
+                        
+                        <!-- Pink cluster dots -->
+                        <div class="cluster-dot dot-pink-1"></div>
+                        <div class="cluster-dot dot-pink-2"></div>
+                        <div class="cluster-dot dot-pink-3"></div>
+                        <div class="cluster-dot dot-pink-4"></div>
+                        
+                        <!-- Colored squares that dots merge into -->
+                        <div class="cluster-square square-purple"></div>
+                        <div class="cluster-square square-orange"></div>
+                        <div class="cluster-square square-pink"></div>
+                    </div>
                     <h3 class="voting-card-title">AI Theme Clustering</h3>
                     <p class="voting-card-description">After voting closes, AI analyzes all submissions to surface recurring themes, concerns, and narrative patterns—revealing collective anxieties and hopes.</p>
                 </div>
             </div>
 
-            <div class="max-w-1000 fade-in">
-                <div class="feature-image-wrapper">
-                    <img src="./desktop-screenshots/lt-dt-themes.png" alt="Theme analysis dashboard" class="feature-image">
+            <div class="fade-in">
+                <div class="image-glow-wrapper">
+                    <div class="image-glow-bg-right"></div>
+                    <div>
+                        <img src="./desktop-screenshots/lt-dt-themes.png" alt="Theme analysis dashboard" class="feature-image">
+                    </div>
                 </div>
                 <div class="theme-results-container">
                     <p class="text-white mb-12">Example Theme Clusters:</p>
                     <div class="theme-tags-grid">
-                        <span class="theme-tag theme-tag-orange">Privacy Erosion</span>
                         <span class="theme-tag theme-tag-purple">Authentic Connection</span>
                         <span class="theme-tag theme-tag-orange">Technology Dependence</span>
                         <span class="theme-tag theme-tag-purple">Social Isolation</span>
@@ -1325,16 +2467,44 @@
     <section class="section section-gray">
         <div class="container">
             <div class="section-header fade-in">
-                <span class="section-label">Desktop Experience</span>
                 <h2 class="section-title">Full Workflow</h2>
-                <p class="section-subtitle">Browse tales, read scenarios, submit endings, and explore themed results</p>
+                <p class="section-subtitle">Browse tales, read scenarios, vote, submit endings, and explore themed results.</p>
             </div>
 
-            <div class="video-container fade-in">
-                <video autoplay loop muted playsinline>
-                    <source src="desktop-screenshots/desktop-flow2.mp4" type="video/mp4">
-                    Your browser does not support video playback.
-                </video>
+            <div class="workflow-glow-wrapper">
+                <div class="workflow-glow-bg"></div>
+                
+                <!-- Platform Toggle -->
+                <div class="platform-toggle-container fade-in">
+                    <div class="platform-toggle">
+                        <button class="platform-btn active" data-platform="desktop">
+                            <i data-lucide="monitor" width="20" height="20"></i>
+                            Desktop
+                        </button>
+                        <button class="platform-btn" data-platform="mobile">
+                            <i data-lucide="smartphone" width="20" height="20"></i>
+                            Mobile
+                        </button>
+
+                    </div>
+                </div>
+                  <!-- Desktop Video (Default) -->
+                  <div class="video-container fade-in platform-video desktop active" data-platform-content="desktop">
+                    <video loop muted playsinline class="workflow-video">
+                        <source src="desktop-screenshots/desktop-workflow.mp4" type="video/mp4">
+                        Your browser does not support video playback.
+                    </video>
+                </div>
+
+                <!-- Mobile Video (Hidden by default) -->
+                <div class="video-container fade-in platform-video mobile" data-platform-content="mobile">
+                    <video loop muted playsinline class="workflow-video">
+                        <source src="mobile-screenshots/mobile-workflow.mp4" type="video/mp4">
+                        Your browser does not support video playback.
+                    </video>
+                </div>
+
+              
             </div>
         </div>
     </section>
@@ -1345,7 +2515,7 @@
             <div class="section-header fade-in">
                 <span class="section-label">Mobile Onboarding</span>
                 <h2 class="section-title">Get Users Creating in 30 Seconds</h2>
-                <p class="section-subtitle">Frictionless introduction to concept, mechanics, and first contribution</p>
+                <p class="section-subtitle">Frictionless introduction to concept, mechanics, and first contribution.</p>
             </div>
 
             <div class="onboarding-gallery fade-in">
@@ -1512,7 +2682,6 @@
             <div class="section-header fade-in">
                 
                 <h3 class="text-2xl mb-32 text-center">Current State</h3>
-                <p class="section-subtitle">Functional prototype ready for validation</p>
             </div>
 
             <div class="feature-card fade-in" style="margin: 48px auto; max-width: 400px;">
@@ -1544,17 +2713,17 @@
                 <div class="next-steps-grid">
                     <div class="next-step-card">
                         <div class="next-step-title">Phase 1 · Testing</div>
-                        <p class="next-step-description">Integrate onboarding flow into live prototype and conduct moderated user testing with 10-15 participants to validate core mechanics</p>
+                        <p class="next-step-description">Integrate onboarding flow into live prototype and conduct moderated user testing with 10-15 participants to validate core mechanics.</p>
                     </div>
                     
                     <div class="next-step-card">
                         <div class="next-step-title">Phase 2 · Refinement</div>
-                        <p class="next-step-description">Iterate based on user feedback, optimize AI theme detection, and refine voting mechanics for clearer prediction signals</p>
+                        <p class="next-step-description">Iterate based on user feedback, optimize AI theme detection, and refine voting mechanics for clearer prediction signals.</p>
                     </div>
                     
                     <div class="next-step-card">
                         <div class="next-step-title">Phase 3 · Brand</div>
-                        <p class="next-step-description">Solidify brand identity and create comprehensive style guide to ensure consistency across all touchpoints as platform scales</p>
+                        <p class="next-step-description">Solidify brand identity and create comprehensive style guide to ensure consistency across all touchpoints as platform scales.</p>
                     </div>
                 </div>
             </div>
@@ -1594,21 +2763,83 @@
             observer.observe(el);
         });
 
-        // Video autoplay on scroll
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-        }, { threshold: 0.5 });
+        // Removed general video observer - only workflow videos are scroll-controlled
+        // All other videos (like card videos) will autoplay naturally with their autoplay attribute
 
-        document.querySelectorAll('video').forEach(video => {
-            videoObserver.observe(video);
+        // Platform Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformButtons = document.querySelectorAll('.platform-btn');
+            const platformVideos = document.querySelectorAll('.platform-video');
+
+            // Workflow video scroll-based autoplay
+            const workflowVideoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const videoContainer = entry.target;
+                    const video = videoContainer.querySelector('video');
+                    
+                    if (entry.isIntersecting && videoContainer.classList.contains('active')) {
+                        // Only play if this is the active platform video
+                        if (video) video.play();
+                    } else {
+                        // Pause when out of view
+                        if (video) video.pause();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            // Observe all platform video containers
+            platformVideos.forEach(container => {
+                workflowVideoObserver.observe(container);
+            });
+
+            platformButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+
+                    // Update button states
+                    platformButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update video visibility and playback
+                    platformVideos.forEach(videoContainer => {
+                        const video = videoContainer.querySelector('video');
+                        const containerPlatform = videoContainer.getAttribute('data-platform-content');
+
+                        if (containerPlatform === platform) {
+                            videoContainer.classList.add('active');
+                            
+                            // Check if container is in viewport before playing
+                            const rect = videoContainer.getBoundingClientRect();
+                            const isInViewport = (
+                                rect.top >= 0 &&
+                                rect.left >= 0 &&
+                                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                            );
+                            
+                            // Only play if in viewport
+                            if (isInViewport) {
+                                setTimeout(() => {
+                                    if (video) video.play();
+                                }, 100);
+                            }
+                        } else {
+                            videoContainer.classList.remove('active');
+                            // Pause and reset video when switching away
+                            if (video) {
+                                video.pause();
+                                video.currentTime = 0;
+                            }
+                        }
+                    });
+                });
+            });
         });
+
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>
